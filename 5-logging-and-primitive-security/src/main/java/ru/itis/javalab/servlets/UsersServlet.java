@@ -30,7 +30,7 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<User> users = usersService.getAllUsers();
         request.setAttribute("usersForJsp", users);
-        request.getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+        request.getRequestDispatcher("/public/users.jsp").forward(request, response);
     }
 
     @Override
