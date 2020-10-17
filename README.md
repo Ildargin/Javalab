@@ -1,5 +1,4 @@
-###  Javalab repository
+### Javalab repository
 
-
-5. [Adding JDBC template hw](./5-web-app)
-
+4. [Adding JDBC template hw](./4-simple-jdbc-template)
+5. [Adding logging, auth filter and cookie](./5-logging-and-primitive-security)
