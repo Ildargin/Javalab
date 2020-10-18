@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class UsersServlet extends HttpServlet {
+public class ProfileServlet extends HttpServlet {
 
     private UsersService usersService;
 
@@ -30,7 +30,7 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<User> users = usersService.getAllUsers();
         request.setAttribute("usersForJsp", users);
-        request.getRequestDispatcher("/public/users.jsp").forward(request, response);
+        request.getRequestDispatcher("/public/profile.jsp").forward(request, response);
     }
 
     @Override

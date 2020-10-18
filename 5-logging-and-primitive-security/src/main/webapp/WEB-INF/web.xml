@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
     <servlet>
-        <servlet-name>users-servlet</servlet-name>
-        <servlet-class>ru.itis.javalab.servlets.UsersServlet</servlet-class>
+        <servlet-name>profile-servlet</servlet-name>
+        <servlet-class>ru.itis.javalab.servlets.ProfileServlet</servlet-class>
     </servlet>
 
     <servlet>
@@ -28,8 +28,8 @@
     </servlet-mapping>
     
     <servlet-mapping>
-        <servlet-name>users-servlet</servlet-name>
-        <url-pattern>/users</url-pattern>
+        <servlet-name>profile-servlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -43,22 +43,23 @@
     </servlet-mapping>
 
     <filter>
-        <filter-name>urlFilter</filter-name>
-        <filter-class>ru.itis.javalab.filters.RequestUrlFilter</filter-class>
+        <filter-name>UrlLoggerFilter</filter-name>
+        <filter-class>ru.itis.javalab.filters.UrlLoggerFilter</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>urlFilter</filter-name>
+        <filter-name>UrlLoggerFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+
     <filter>
-        <filter-name>headersFilter</filter-name>
-        <filter-class>ru.itis.javalab.filters.RequestHeadersFilter</filter-class>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.itis.javalab.filters.AuthenticationFilter</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>headersFilter</filter-name>
+        <filter-name>AuthFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
