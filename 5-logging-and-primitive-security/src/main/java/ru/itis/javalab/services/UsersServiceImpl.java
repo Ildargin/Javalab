@@ -4,6 +4,7 @@ import ru.itis.javalab.models.User;
 import ru.itis.javalab.repositories.UsersRepository;
 
 import java.util.List;
+import java.util.Map;
 
 public class UsersServiceImpl implements UsersService {
 
@@ -16,5 +17,16 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public List<User> getAllUsers() {
         return usersRepository.findAll();
+    }
+
+    @Override
+    public void saveUser(Map pool) {
+        User user = User.builder()
+                .firstName((String) pool.get("first_name"))
+                .lastName((String) pool.get("last_name"))
+                .password((String) pool.get("password"))
+                .email((String) pool.get("email"))
+                .build();
+        usersRepository.save(user);
     }
 }

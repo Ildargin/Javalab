@@ -3,13 +3,17 @@ package ru.itis.javalab.repositories;
 import ru.itis.javalab.models.User;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class UsersRepositoryJdbcImpl implements UsersRepository {
 
     private static final String SQL_SELECT_BY_AGE = "SELECT * FROM USERS WHERE AGE = ?";
     private static final String SQL_SELECT = "SELECT * from USERS";
+    public static final String SQL_ADD_USER = "INSERT INTO Users (first_name, last_name, password, email) VALUES (?, ?, ?, ?);";
 
     private SimpleJdbcTemplate template;
 
@@ -51,6 +55,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
     @Override
     public void save(User entity) {
+        List<User> user = template.query(SQL_ADD_USER, userRowMapper, new String[]{entity.getFirstName(), entity.getLastName(), entity.getPassword(), entity.getEmail()});
     }
 
     @Override

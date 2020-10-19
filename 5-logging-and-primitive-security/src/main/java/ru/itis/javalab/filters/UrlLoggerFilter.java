@@ -8,7 +8,6 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.logging.Level;
 
 public class UrlLoggerFilter implements Filter {
 
@@ -16,7 +15,6 @@ public class UrlLoggerFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        logger.;
     }
 
     @Override

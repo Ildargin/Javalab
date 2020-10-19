@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SimpleJdbcTemplate {
@@ -19,6 +20,7 @@ public class SimpleJdbcTemplate {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        List<T> Result = new ArrayList<>();
 
         try {
             connection = dataSource.getConnection();
@@ -30,13 +32,15 @@ public class SimpleJdbcTemplate {
                     position++;
                 }
             }
-            resultSet = statement.executeQuery();
-            List<T> Result = new ArrayList<>();
 
+            try{
+               resultSet = statement.executeQuery();
+            } catch (SQLException e){
+                return Collections.emptyList();
+            }
             while (resultSet.next()) {
                 Result.add(rowMapper.mapRow(resultSet));
             }
-
             return Result;
 
         } catch (SQLException e) {
@@ -62,5 +66,4 @@ public class SimpleJdbcTemplate {
             }
         }
     }
-
 }
