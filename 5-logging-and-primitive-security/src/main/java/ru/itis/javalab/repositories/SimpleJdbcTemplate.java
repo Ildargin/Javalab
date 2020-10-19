@@ -16,7 +16,7 @@ public class SimpleJdbcTemplate {
         this.dataSource = dataSource;
     }
 
-    public <T> List<T> query(String sql, RowMapper<T> rowMapper, Object... args) {
+    public <T> List<T> query(String sql, RowMapper<T> rowMapper, Object ...args) {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -28,11 +28,12 @@ public class SimpleJdbcTemplate {
             int position = 1;
             if (args.length > 0) {
                 for (Object arg : args) {
+                    System.out.println(arg);
                     statement.setObject(position, arg);
                     position++;
                 }
             }
-
+            System.out.println(statement.toString());
             try{
                resultSet = statement.executeQuery();
             } catch (SQLException e){

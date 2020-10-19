@@ -3,17 +3,17 @@ package ru.itis.javalab.repositories;
 import ru.itis.javalab.models.User;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.Statement;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class UsersRepositoryJdbcImpl implements UsersRepository {
 
     private static final String SQL_SELECT_BY_AGE = "SELECT * FROM USERS WHERE AGE = ?";
     private static final String SQL_SELECT = "SELECT * from USERS";
-    public static final String SQL_ADD_USER = "INSERT INTO Users (first_name, last_name, password, email) VALUES (?, ?, ?, ?);";
+    public static final String SQL_ADD_USER = "INSERT INTO USERS (first_name, last_name, password, email) VALUES (?, ?, ?, ?);";
+    public static final String SQL_FIND_BY_EMAIL_AND_PASSWORD = "SELECT * FROM  USERS WHERE email=? AND password=?";
+
 
     private SimpleJdbcTemplate template;
 
@@ -37,15 +37,24 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     @Override
     public List<User> findAll() {
         List<User> usersList = template.query(SQL_SELECT, userRowMapper);
-        for(User user : usersList ){
+        for (User user : usersList) {
             System.out.println(user);
         }
         return usersList;
     }
 
     @Override
-    public Optional<User> findFirstByFirstnameAndLastname(String smth) {
-        return Optional.empty();
+    public Optional<User> findFirstByEmailAndPassword(String[] args) {
+
+        System.out.println(args[0]);
+        System.out.println(args[1]);
+        List<User> usersList = template.query(SQL_FIND_BY_EMAIL_AND_PASSWORD, userRowMapper, args[0], args[1]);
+        if(usersList.isEmpty()) {
+            return Optional.empty();
+        } else {
+           return Optional.of(usersList.get(0));
+        }
+
     }
 
     @Override

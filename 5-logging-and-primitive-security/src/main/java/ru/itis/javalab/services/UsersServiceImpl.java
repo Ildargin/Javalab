@@ -5,6 +5,7 @@ import ru.itis.javalab.repositories.UsersRepository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class UsersServiceImpl implements UsersService {
 
@@ -20,6 +21,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public Optional<User> findUserByEmailAndPassword(String[] args) {
+        return usersRepository.findFirstByEmailAndPassword(args);
+    }
+
+    @Override
     public void saveUser(Map pool) {
         User user = User.builder()
                 .firstName((String) pool.get("first_name"))
@@ -29,4 +35,5 @@ public class UsersServiceImpl implements UsersService {
                 .build();
         usersRepository.save(user);
     }
+
 }
