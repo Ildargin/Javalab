@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+
 public class UsersServiceImpl implements UsersService {
 
     private UsersRepository usersRepository;
@@ -35,5 +36,4 @@ public class UsersServiceImpl implements UsersService {
                 .build();
         usersRepository.save(user);
     }
-
 }

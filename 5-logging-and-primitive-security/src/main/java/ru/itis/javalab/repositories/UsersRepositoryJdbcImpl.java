@@ -37,15 +37,11 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     @Override
     public List<User> findAll() {
         List<User> usersList = template.query(SQL_SELECT, userRowMapper);
-        for (User user : usersList) {
-            System.out.println(user);
-        }
         return usersList;
     }
 
     @Override
     public Optional<User> findFirstByEmailAndPassword(String[] args) {
-
         System.out.println(args[0]);
         System.out.println(args[1]);
         List<User> usersList = template.query(SQL_FIND_BY_EMAIL_AND_PASSWORD, userRowMapper, args[0], args[1]);
@@ -54,7 +50,6 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
         } else {
            return Optional.of(usersList.get(0));
         }
-
     }
 
     @Override
@@ -66,6 +61,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     public void save(User entity) {
         List<User> user = template.query(SQL_ADD_USER, userRowMapper, new String[]{entity.getFirstName(), entity.getLastName(), entity.getPassword(), entity.getEmail()});
     }
+
 
     @Override
     public void update(User entity) {

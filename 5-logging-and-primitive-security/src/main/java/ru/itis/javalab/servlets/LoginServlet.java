@@ -1,6 +1,7 @@
 package ru.itis.javalab.servlets;
 
 import ru.itis.javalab.models.User;
+import ru.itis.javalab.services.CookiesService;
 import ru.itis.javalab.services.UsersService;
 
 import javax.servlet.ServletConfig;
@@ -11,43 +12,48 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.*;
 
 
 public class LoginServlet extends HttpServlet {
 
     private UsersService usersService;
+    private CookiesService cookiesService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         ServletContext servletContext = config.getServletContext();
         usersService = (UsersService) servletContext.getAttribute("usersService");
+        cookiesService = (CookiesService) servletContext.getAttribute("cookieService");
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/public/login.html").forward(request, response);
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        Cookie[] CookiesArray = req.getCookies();
+        if (cookiesService.findAuthCookie(CookiesArray).isPresent()){
+            req.getRequestDispatcher("/profile").forward(req, res);
+        };
+        req.getRequestDispatcher("/public/login.html").forward(req, res);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("mail").trim();
-        String password = request.getParameter("password").trim();
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        String email = req.getParameter("mail").trim();
+        String password = req.getParameter("password").trim();
         Optional<User> user = usersService.findUserByEmailAndPassword(new String[]{email, password});
         if (user.isPresent()){
-            //String color = req.getParameter("color");
-            //        Cookie cookie = new Cookie("color", color);
-            //        cookie.setMaxAge(60 * 60 * 24 * 365);
-            //        resp.addCookie(cookie);
-            //        resp.sendRedirect("/users");
-            // Cookie Auth
-            response.sendRedirect("/profile");
+            Long userId = user.get().getId();
+            UUID cookieId = UUID.randomUUID();
+            cookiesService.AddAuthCookieToDb(userId, cookieId.toString());
+            Cookie cookie = new Cookie("AUTH", cookieId.toString());
+            cookie.setMaxAge(60 * 60 * 24 * 365);
+            res.addCookie(cookie);;
+            res.sendRedirect("/profile");
         } else{
-            response.sendRedirect("/login");
+            res.sendRedirect("/signup");
         }
 
     }
+
+
 }

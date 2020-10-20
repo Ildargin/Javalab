@@ -67,4 +67,54 @@ public class SimpleJdbcTemplate {
             }
         }
     }
+
+    public <T> Boolean checkQuery(String sql, Object ...args) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<T> Result = new ArrayList<>();
+
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(sql);
+            int position = 1;
+            if (args.length > 0) {
+                for (Object arg : args) {
+                    System.out.println(arg);
+                    statement.setObject(position, arg);
+                    position++;
+                }
+            }
+            try{
+                resultSet = statement.executeQuery();
+            } catch (SQLException e){
+                return false;
+            }
+            while (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            return false;
+        }
+    }
 }
