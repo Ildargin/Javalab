@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class UrlLoggerFilter implements Filter {
 
-    private static  Logger logger = LoggerFactory.getLogger(UrlLoggerFilter.class);
+    private static Logger logger = LoggerFactory.getLogger(UrlLoggerFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -19,10 +19,10 @@ public class UrlLoggerFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-       HttpServletRequest request = (HttpServletRequest) servletRequest;
-       HttpServletResponse response = (HttpServletResponse)servletResponse;
-       logger.info(String.valueOf(request.getRequestURL()));
-       filterChain.doFilter(servletRequest, servletResponse);
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        logger.info(String.valueOf(request.getRequestURL()));
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

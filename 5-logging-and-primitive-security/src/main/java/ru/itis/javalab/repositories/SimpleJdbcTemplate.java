@@ -16,7 +16,7 @@ public class SimpleJdbcTemplate {
         this.dataSource = dataSource;
     }
 
-    public <T> List<T> query(String sql, RowMapper<T> rowMapper, Object ...args) {
+    public <T> List<T> query(String sql, RowMapper<T> rowMapper, Object... args) {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -34,9 +34,9 @@ public class SimpleJdbcTemplate {
                 }
             }
             System.out.println(statement.toString());
-            try{
-               resultSet = statement.executeQuery();
-            } catch (SQLException e){
+            try {
+                resultSet = statement.executeQuery();
+            } catch (SQLException e) {
                 return Collections.emptyList();
             }
             while (resultSet.next()) {
@@ -68,7 +68,7 @@ public class SimpleJdbcTemplate {
         }
     }
 
-    public <T> Boolean checkQuery(String sql, Object ...args) {
+    public <T> Boolean checkQuery(String sql, Object... args) {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -85,9 +85,9 @@ public class SimpleJdbcTemplate {
                     position++;
                 }
             }
-            try{
+            try {
                 resultSet = statement.executeQuery();
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 return false;
             }
             while (resultSet.next()) {

@@ -6,7 +6,7 @@ public class CookiesRepositoryJdbcImpl implements CookiesRepository {
     private static String SQL_CHECK_COOKIES_BY_ID = "SELECT * FROM cookies WHERE id=?";
     private static String SQL_CHECK_COOKIES_BY_VALUE = "SELECT * FROM cookies WHERE cookie_value=?";
     private static String SQL_CHECK_COOKIES_BY_VALUE_AND_ID = "SELECT * FROM cookies WHERE cookie_value=? AND id=?";
-    private static String SQL_SAVE_COOKIES ="INSERT INTO cookies(id, cookie_value) values (?,?)";
+    private static String SQL_SAVE_COOKIES = "INSERT INTO cookies(id, cookie_value) values (?,?)";
 
     private SimpleJdbcTemplate template;
 
@@ -16,11 +16,13 @@ public class CookiesRepositoryJdbcImpl implements CookiesRepository {
 
     @Override
     public Boolean CheckCookiesByID(Long id) {
+
         return template.checkQuery(SQL_CHECK_COOKIES_BY_ID, id);
     }
 
     @Override
     public Boolean CheckCookiesByValue(String value) {
+
         return template.checkQuery(SQL_CHECK_COOKIES_BY_VALUE, value);
     }
 

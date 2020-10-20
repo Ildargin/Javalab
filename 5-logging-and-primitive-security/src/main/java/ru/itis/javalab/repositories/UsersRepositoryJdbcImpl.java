@@ -3,7 +3,6 @@ package ru.itis.javalab.repositories;
 import ru.itis.javalab.models.User;
 
 import javax.sql.DataSource;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +12,6 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     private static final String SQL_SELECT = "SELECT * from USERS";
     public static final String SQL_ADD_USER = "INSERT INTO USERS (first_name, last_name, password, email) VALUES (?, ?, ?, ?);";
     public static final String SQL_FIND_BY_EMAIL_AND_PASSWORD = "SELECT * FROM  USERS WHERE email=? AND password=?";
-
 
     private SimpleJdbcTemplate template;
 
@@ -45,17 +43,13 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
         System.out.println(args[0]);
         System.out.println(args[1]);
         List<User> usersList = template.query(SQL_FIND_BY_EMAIL_AND_PASSWORD, userRowMapper, args[0], args[1]);
-        if(usersList.isEmpty()) {
+        if (usersList.isEmpty()) {
             return Optional.empty();
         } else {
-           return Optional.of(usersList.get(0));
+            return Optional.of(usersList.get(0));
         }
     }
 
-    @Override
-    public Optional<User> findById(Long id) {
-        return Optional.empty();
-    }
 
     @Override
     public void save(User entity) {
