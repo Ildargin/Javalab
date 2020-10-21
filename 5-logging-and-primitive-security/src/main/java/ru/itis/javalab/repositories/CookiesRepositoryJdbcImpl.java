@@ -3,10 +3,10 @@ package ru.itis.javalab.repositories;
 import javax.sql.DataSource;
 
 public class CookiesRepositoryJdbcImpl implements CookiesRepository {
-    private static String SQL_CHECK_COOKIES_BY_ID = "SELECT * FROM cookies WHERE id=?";
-    private static String SQL_CHECK_COOKIES_BY_VALUE = "SELECT * FROM cookies WHERE cookie_value=?";
-    private static String SQL_CHECK_COOKIES_BY_VALUE_AND_ID = "SELECT * FROM cookies WHERE cookie_value=? AND id=?";
-    private static String SQL_SAVE_COOKIES = "INSERT INTO cookies(id, cookie_value) values (?,?)";
+    private static final String SQL_CHECK_COOKIES_BY_ID = "SELECT * FROM cookies WHERE id=?";
+    private static final String SQL_CHECK_COOKIES_BY_VALUE = "SELECT * FROM cookies WHERE cookie_value=?";
+    private static final String SQL_CHECK_COOKIES_BY_VALUE_AND_ID = "SELECT * FROM cookies WHERE cookie_value=? AND id=?";
+    private static final String SQL_SAVE_COOKIES = "INSERT INTO cookies(id, cookie_value) values (?,?)";
 
     private SimpleJdbcTemplate template;
 

@@ -30,10 +30,12 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         Cookie[] CookiesArray = req.getCookies();
-        if (cookiesService.findAuthCookie(CookiesArray).isPresent()){
-            req.getRequestDispatcher("/profile").forward(req, res);
-        };
-        req.getRequestDispatcher("/public/login.html").forward(req, res);
+        if (cookiesService.findAuthCookie(CookiesArray).isPresent()) {
+            res.sendRedirect("/profile");
+        } else {
+            req.getRequestDispatcher("/public/login.html").forward(req, res);
+        }
+
     }
 
     @Override
@@ -41,15 +43,15 @@ public class LoginServlet extends HttpServlet {
         String email = req.getParameter("mail").trim();
         String password = req.getParameter("password").trim();
         Optional<User> user = usersService.findUserByEmailAndPassword(new String[]{email, password});
-        if (user.isPresent()){
+        if (user.isPresent()) {
             Long userId = user.get().getId();
             UUID cookieId = UUID.randomUUID();
             cookiesService.AddAuthCookieToDb(userId, cookieId.toString());
             Cookie cookie = new Cookie("AUTH", cookieId.toString());
             cookie.setMaxAge(60 * 60 * 24 * 365);
-            res.addCookie(cookie);;
+            res.addCookie(cookie);
             res.sendRedirect("/profile");
-        } else{
+        } else {
             res.sendRedirect("/signup");
         }
 
