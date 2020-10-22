@@ -43,7 +43,6 @@ public class SimpleJdbcTemplate {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-
         try {
             connection = dataSource.getConnection();
             statement = prepareStatement(connection, sql, args);

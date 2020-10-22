@@ -32,6 +32,7 @@ body {
 
 button {
   background-color: #1ab188;
+  width: 100%;
   color: white;
   font-size: 3rem;
   font-weight: 400;

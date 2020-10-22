@@ -29,13 +29,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        Cookie[] CookiesArray = req.getCookies();
-        if (cookiesService.findAuthCookie(CookiesArray).isPresent()) {
-            res.sendRedirect("/profile");
-        } else {
-            req.getRequestDispatcher("/public/login.html").forward(req, res);
-        }
-
+        req.getRequestDispatcher("/public/login.html").forward(req, res);
     }
 
     @Override
