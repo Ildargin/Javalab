@@ -18,7 +18,6 @@ public class SimpleJdbcTemplate {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         List<T> Result = new ArrayList<>();
-
         try {
             connection = dataSource.getConnection();
             statement = prepareStatement(connection, sql, args);
