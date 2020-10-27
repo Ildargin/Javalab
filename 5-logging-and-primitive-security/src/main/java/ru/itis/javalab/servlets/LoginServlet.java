@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String email = req.getParameter("mail").trim();
         String password = req.getParameter("password").trim();
-        Optional<User> user = usersService.findUserByEmailAndPassword(new String[]{email, password});
+        Optional<User> user = usersService.findUserByEmailAndPassword(email, password);
         if (user.isPresent()) {
             Long userId = user.get().getId();
             UUID cookieId = UUID.randomUUID();

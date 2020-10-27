@@ -1,10 +1,10 @@
 package ru.itis.javalab.services;
 
+import ru.itis.javalab.dto.UserDto;
 import ru.itis.javalab.models.User;
 import ru.itis.javalab.repositories.UsersRepository;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -22,17 +22,17 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Optional<User> findUserByEmailAndPassword(String[] args) {
-        return usersRepository.findFirstByEmailAndPassword(args);
+    public Optional<User> findUserByEmailAndPassword(String email, String  password) {
+        return usersRepository.findFirstByEmailAndPassword(new String[] {email, password});
     }
 
     @Override
-    public void saveUser(Map pool) {
+    public void saveUser(UserDto userDto) {
         User user = User.builder()
-                .firstName((String) pool.get("first_name"))
-                .lastName((String) pool.get("last_name"))
-                .password((String) pool.get("password"))
-                .email((String) pool.get("email"))
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .password(userDto.getPassword())
+                .email(userDto.getEmail())
                 .build();
         usersRepository.save(user);
     }

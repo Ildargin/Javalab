@@ -1,5 +1,6 @@
 package ru.itis.javalab.servlets;
 
+import ru.itis.javalab.dto.UserDto;
 import ru.itis.javalab.services.UsersService;
 
 import javax.servlet.ServletConfig;
@@ -30,12 +31,12 @@ public class SignupServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<String, String> pool = new HashMap<>();
-        pool.put("first_name", request.getParameter("first_name"));
-        pool.put("last_name", request.getParameter("last_name"));
-        pool.put("password", request.getParameter("password"));
-        pool.put("email", request.getParameter("email"));
-        usersService.saveUser(pool);
+        UserDto userDto = new UserDto();
+        userDto.setFirstName(request.getParameter("first_name"));
+        userDto.setLastName(request.getParameter("last_name"));
+        userDto.setPassword(request.getParameter("password"));
+        userDto.setEmail(request.getParameter("email"));
+        usersService.saveUser(userDto);
         response.sendRedirect("public/login.html");
     }
 }
