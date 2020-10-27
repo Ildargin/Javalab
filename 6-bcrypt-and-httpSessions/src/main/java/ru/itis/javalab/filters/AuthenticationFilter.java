@@ -1,65 +1,50 @@
 package ru.itis.javalab.filters;
 
 
-import ru.itis.javalab.services.CookiesService;
-
 import javax.servlet.*;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Optional;
 
 public class AuthenticationFilter implements Filter {
-    private CookiesService cookiesService;
 
     @Override
     public void init(FilterConfig config) {
-        ServletContext servletContext = config.getServletContext();
-        cookiesService = (CookiesService) servletContext.getAttribute("cookieService");
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse res = (HttpServletResponse) servletResponse;
+        HttpSession session = req.getSession(false);
 
-        boolean isLoginPage = req.getRequestURI().equals("/login");
-        boolean isProfilePage = req.getRequestURI().equals("/profile");
+        Boolean isAuthenticated = false;
+        Boolean sessionExists = session != null;
+        Boolean isLoginPage = req.getRequestURI().equals("/login");
+        Boolean isProfilePage = req.getRequestURI().equals("/profile");
+        
+        if (sessionExists) {
+            isAuthenticated = (Boolean) session.getAttribute("authenticated");
+            if (isAuthenticated == null) {
+                isAuthenticated = false;
+            }
+        }
 
         if (isLoginPage){
-            Cookie[] CookiesArray = req.getCookies();
-            Optional<Cookie> authCookie = cookiesService.findAuthCookie(CookiesArray);
-            Boolean cookieInDb;
-            if (authCookie.isPresent()){
-                cookieInDb = cookiesService.CheckCookiesByValue(authCookie.get().getValue());
-                if (cookieInDb){
-                    res.sendRedirect("/profile");
-                } else {
-                    filterChain.doFilter(req, res);
-                }
-            }
-            else {
+            if (isAuthenticated) {
+                res.sendRedirect("/profile");
+            } else {
                 filterChain.doFilter(req, res);
             }
         }
-
         if (isProfilePage) {
-            Cookie[] CookiesArray = req.getCookies();
-            Optional<Cookie> authCookie= cookiesService.findAuthCookie(CookiesArray);
-            Boolean cookieInDb;
-            if (authCookie.isPresent()){
-                cookieInDb = cookiesService.CheckCookiesByValue(authCookie.get().getValue());
-                if (cookieInDb){
-                    filterChain.doFilter(servletRequest, servletResponse);
-                } else {
-                    res.sendRedirect("/login");
-                }
+            if (isAuthenticated) {
+                filterChain.doFilter(req, res);
             } else {
-                res.sendRedirect("/login");
+                res.sendRedirect("/index");
             }
         }
-
     }
 
     @Override

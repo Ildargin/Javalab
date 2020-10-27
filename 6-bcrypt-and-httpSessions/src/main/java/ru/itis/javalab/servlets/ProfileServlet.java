@@ -1,7 +1,6 @@
 package ru.itis.javalab.servlets;
 
 import ru.itis.javalab.models.User;
-import ru.itis.javalab.repositories.UsersRepositoryJdbcImpl;
 import ru.itis.javalab.services.UsersService;
 
 import javax.servlet.ServletConfig;
@@ -11,9 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 public class ProfileServlet extends HttpServlet {
@@ -21,7 +18,7 @@ public class ProfileServlet extends HttpServlet {
     private UsersService usersService;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) {
         ServletContext servletContext = config.getServletContext();
         usersService = (UsersService) servletContext.getAttribute("usersService");
     }
@@ -34,7 +31,7 @@ public class ProfileServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String color = req.getParameter("color");
         Cookie cookie = new Cookie("color", color);
         cookie.setMaxAge(60 * 60 * 24 * 365);

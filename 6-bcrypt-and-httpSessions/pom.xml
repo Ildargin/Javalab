@@ -8,7 +8,7 @@
     </properties>
     <groupId>ru.itis.javalab</groupId>
     <artifactId>web-application</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <build>
         <plugins>
             <plugin>
@@ -70,6 +70,14 @@
             <artifactId>slf4j-jdk14</artifactId>
             <version>1.7.28</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.4.0</version>
+        </dependency>
+
 
 
     </dependencies>

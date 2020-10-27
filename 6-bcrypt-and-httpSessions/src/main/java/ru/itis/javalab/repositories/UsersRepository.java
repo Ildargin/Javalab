@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface UsersRepository extends CrudRepository<User> {
     List<User> findALLByAge(Integer age);
 
-    Optional<User> findFirstByEmailAndPassword(String[] FirstNameAndPassword);
+    Optional<User> findByEmail(String email);
 }

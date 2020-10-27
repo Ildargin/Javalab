@@ -5,7 +5,6 @@ import ru.itis.javalab.services.UsersService;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +17,7 @@ public class SignupServlet extends HttpServlet {
     private UsersService usersService;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) {
         ServletContext servletContext = config.getServletContext();
         usersService = (UsersService) servletContext.getAttribute("usersService");
     }
@@ -29,7 +28,7 @@ public class SignupServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws  IOException {
         Map<String, String> pool = new HashMap<>();
         pool.put("first_name", request.getParameter("first_name"));
         pool.put("last_name", request.getParameter("last_name"));

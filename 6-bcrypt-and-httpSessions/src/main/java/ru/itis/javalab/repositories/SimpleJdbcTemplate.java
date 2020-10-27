@@ -21,36 +21,17 @@ public class SimpleJdbcTemplate {
         try {
             connection = dataSource.getConnection();
             statement = prepareStatement(connection, sql, args);
-            try {
-                resultSet = statement.executeQuery();
-            } catch (SQLException e) {
+            //https://stackoverflow.com/questions/30906855/java-sql-statement-executequerystring-sql-throws-sqlexception-when-delete-sql
+            if (sql.toLowerCase().contains("insert")) {
+                statement.executeUpdate();
                 return Collections.emptyList();
+            } else {
+                resultSet = statement.executeQuery();
             }
             while (resultSet.next()) {
                 Result.add(rowMapper.mapRow(resultSet));
             }
             return Result;
-
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        } finally {
-            close(connection, statement, resultSet);
-        }
-    }
-
-    public Boolean checkQuery(String sql, Object... args) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = dataSource.getConnection();
-            statement = prepareStatement(connection, sql, args);
-            try {
-                resultSet = statement.executeQuery();
-            } catch (SQLException e) {
-                return false;
-            }
-            return resultSet.next();
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         } finally {

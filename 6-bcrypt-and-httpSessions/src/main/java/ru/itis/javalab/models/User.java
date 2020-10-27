@@ -2,8 +2,8 @@ package ru.itis.javalab.models;
 
 
 import lombok.*;
-@Getter
-@Setter
+
+@Data
 @Builder
 @EqualsAndHashCode
 @ToString

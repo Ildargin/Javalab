@@ -11,7 +11,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     private static final String SQL_SELECT_BY_AGE = "SELECT * FROM USERS WHERE AGE = ?";
     private static final String SQL_SELECT = "SELECT * from USERS";
     public static final String SQL_ADD_USER = "INSERT INTO USERS (first_name, last_name, password, email) VALUES (?, ?, ?, ?);";
-    public static final String SQL_FIND_BY_EMAIL_AND_PASSWORD = "SELECT * FROM  USERS WHERE email=? AND password=?";
+    public static final String SQL_FIND_BY_EMAIL = "SELECT * FROM  USERS WHERE email=?";
 
     private SimpleJdbcTemplate template;
 
@@ -19,6 +19,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             .id(row.getLong("id"))
             .firstName(row.getString("first_name"))
             .lastName((row.getString("last_name")))
+            .password(row.getString("password"))
             .age(row.getInt("age"))
             .build();
 
@@ -39,10 +40,8 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     }
 
     @Override
-    public Optional<User> findFirstByEmailAndPassword(String[] args) {
-        System.out.println(args[0]);
-        System.out.println(args[1]);
-        List<User> usersList = template.query(SQL_FIND_BY_EMAIL_AND_PASSWORD, userRowMapper, args[0], args[1]);
+    public Optional<User> findByEmail(String email) {
+        List<User> usersList = template.query(SQL_FIND_BY_EMAIL, userRowMapper, email);
         if (usersList.isEmpty()) {
             return Optional.empty();
         } else {
