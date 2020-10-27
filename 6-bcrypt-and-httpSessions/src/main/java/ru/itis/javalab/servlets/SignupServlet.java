@@ -1,5 +1,6 @@
 package ru.itis.javalab.servlets;
 
+import ru.itis.javalab.dto.SignUpForm;
 import ru.itis.javalab.services.UsersService;
 
 import javax.servlet.ServletConfig;
@@ -9,9 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class SignupServlet extends HttpServlet {
     private UsersService usersService;
@@ -28,13 +26,14 @@ public class SignupServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws  IOException {
-        Map<String, String> pool = new HashMap<>();
-        pool.put("first_name", request.getParameter("first_name"));
-        pool.put("last_name", request.getParameter("last_name"));
-        pool.put("password", request.getParameter("password"));
-        pool.put("email", request.getParameter("email"));
-        usersService.saveUser(pool);
-        response.sendRedirect("public/login.html");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        SignUpForm form = new SignUpForm();
+        form.setFirstName(request.getParameter("first_name"));
+        form.setLastName(request.getParameter("last_name"));
+        form.setEmail(request.getParameter("email"));
+        form.setPassword(request.getParameter("password"));
+        usersService.saveUser(form);
+        response.sendRedirect("/login");
+
     }
 }

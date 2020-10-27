@@ -2,6 +2,7 @@ package ru.itis.javalab.services;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.itis.javalab.dto.SignUpForm;
 import ru.itis.javalab.models.User;
 import ru.itis.javalab.repositories.UsersRepository;
 
@@ -36,12 +37,12 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void saveUser(Map pool) {
+    public void saveUser(SignUpForm form) {
         User user = User.builder()
-                .firstName((String) pool.get("first_name"))
-                .lastName((String) pool.get("last_name"))
-                .password(passwordEncoder.encode((String) pool.get("password")))
-                .email((String) pool.get("email"))
+                .firstName(form.getFirstName())
+                .lastName(form.getLastName())
+                .password(passwordEncoder.encode(form.getPassword()))
+                .email(form.getEmail())
                 .build();
         usersRepository.save(user);
     }
