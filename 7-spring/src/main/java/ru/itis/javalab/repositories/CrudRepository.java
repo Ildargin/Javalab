@@ -9,5 +9,7 @@ public interface CrudRepository<T> {
 
     void delete(T entity);
 
+    List<T> findAll(int page, int size);
+
     List<T> findAll();
 }

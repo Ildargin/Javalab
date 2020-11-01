@@ -22,6 +22,7 @@ public class UrlLoggerFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         logger.info(String.valueOf(request.getRequestURL()));
+        response.setCharacterEncoding("UTF-8");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

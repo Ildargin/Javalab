@@ -1,9 +1,10 @@
 package ru.itis.javalab.listeners;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import ru.itis.javalab.repositories.UsersRepository;
-import ru.itis.javalab.repositories.UsersRepositoryJdbcImpl;
+import ru.itis.javalab.repositories.UsersRepositoryJdbcTemlateImpl;
 import ru.itis.javalab.services.UsersService;
 import ru.itis.javalab.services.UsersServiceImpl;
 
@@ -34,10 +35,12 @@ public class AppConfigServletContextListener implements ServletContextListener {
         hikariConfig.setMaximumPoolSize(Integer.parseInt(properties.getProperty("db.hikari.max-pool-size")));
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
 
-        UsersRepository usersRepository = new UsersRepositoryJdbcImpl(dataSource);
+        UsersRepository usersRepository = new UsersRepositoryJdbcTemlateImpl(dataSource);
         UsersService usersService = new UsersServiceImpl(usersRepository);
+        ObjectMapper objectMapper = new ObjectMapper();
         servletContext.setAttribute("dataSource", dataSource);
         servletContext.setAttribute("usersService", usersService);
+        servletContext.setAttribute("objectMapper", objectMapper);
     }
 
     @Override
