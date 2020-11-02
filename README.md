@@ -4,4 +4,4 @@
 5. [Adding logging, auth filter and cookie](./5-logging-and-primitive-security)
 6. [Changed Cookies filter to Secsion Filter add password hashing with bcrypt](./6-bcrypt-and-httpSessions)
 7. [Adding Spring Jdbc Template and servlet with json Post/get methods](./7-spring-jdbc-template)
-8. [Adding Spring Jdbc Template and servlet with json Post/get methods](./8-spring-context)
+8. [Adding Spring cotext](./8-spring-context)
