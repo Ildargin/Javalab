@@ -6,9 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import ru.itis.javalab.models.User;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class UsersRepositoryJdbcTemlateImpl implements UsersRepository {
