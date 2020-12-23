@@ -8,4 +8,5 @@
 9. [Adding self-made entity manager](./9-entity-manager)
 10. [Changing №6 from ejs pages to freemarker (Semester work)](https://github.com/Ildargin/javalab-semester-work)
 11. [Annotation processing example](./11-annotation-processing)
-12. [Hibernate basics](./12-hibernate-start)
+12. [Csrf def example](./12-csrf)
+13. [Hibernate basics](./13-hibernate-start)
