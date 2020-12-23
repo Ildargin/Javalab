@@ -29,37 +29,36 @@ public class HtmlProcessor extends AbstractProcessor {
             path = path.substring(1) + element.getSimpleName().toString() + ".html";
             Path out = Paths.get(path);
             Map<String, Object> attributes = new HashMap<>();
-            Configuration configuration = new Configuration(Configuration.VERSION_2_3_30);
-            configuration.setDefaultEncoding("UTF-8");
             try {
-                configuration.setTemplateLoader(new FileTemplateLoader(new File("D:\\javaNEW\\src\\projects\\Annotations\\src\\main\\resources\\ftlh")));
-                Template template = configuration.getTemplate("User.ftlh");
-                List<Map<String, String>> inputs = new ArrayList<>();
-                HtmlForm annotation = element.getAnnotation(HtmlForm.class);
-                List<? extends Element> list = element.getEnclosedElements();
-                for (Element value : list) {
-                    HtmlInput htmlInput = value.getAnnotation(HtmlInput.class);
-                    if (htmlInput != null) {
-                        Map<String, String> map = new HashMap<>();
-                        map.put("type", htmlInput.type());
-                        map.put("name", htmlInput.name());
-                        map.put("placeholder", htmlInput.placeholder());
-                        inputs.add(map);
+                Configuration cfg = new Configuration(Configuration.VERSION_2_3_20);
+                cfg.setDefaultEncoding("UTF-8");
+                cfg.setTemplateLoader(new FileTemplateLoader(new File("C:\\Users\\Mi\\Desktop\\github-projects\\Javalab\\11-annotation-processing\\src\\main\\resources")));
+                Template template = cfg.getTemplate("Form.ftl");
+                HtmlForm formAnnotation = element.getAnnotation(HtmlForm.class);
+                List<Input> inputsList = new ArrayList<>();
+                for (Element el : element.getEnclosedElements()) {
+                    HtmlInput input = el.getAnnotation(HtmlInput.class);
+                    if (input != null) {
+                        inputsList.add(Input.builder()
+                                .placeholder(input.placeholder())
+                                .name(input.name())
+                                .type(input.type())
+                                .build());
                     }
                 }
-                attributes.put("inputs", inputs);
-                attributes.put("action", annotation.action());
-                attributes.put("method", annotation.method());
-                try {
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(out.toFile().getAbsolutePath()));
-                    template.process(attributes, writer);
-                } catch (IOException | TemplateException e) {
-                    throw new IllegalStateException(e);
-                }
-            } catch (IOException e) {
+                attributes.put("inputs", inputsList);
+                attributes.put("action", formAnnotation.action());
+                attributes.put("method", formAnnotation.method());
+
+                BufferedWriter writer = new BufferedWriter(new FileWriter(out.toFile().getAbsolutePath()));
+                template.process(attributes, writer);
+            } catch (IOException | TemplateException e) {
                 throw new IllegalArgumentException(e);
             }
         }
         return true;
     }
 }
+
+
+

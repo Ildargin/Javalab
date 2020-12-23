@@ -7,4 +7,5 @@
 8. [Adding Spring context](./8-spring-context)
 9. [Adding self-made entity manager](./9-entity-manager)
 10. [Changing №6 from ejs pages to freemarker (Semester work)](https://github.com/Ildargin/javalab-semester-work)
-11. [ Annotation processing example](./11-annotation-processing)
+11. [Annotation processing example](./11-annotation-processing)
+12. [Hibernate basics](./12-hibernate-start)

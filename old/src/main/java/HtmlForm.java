@@ -4,9 +4,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.SOURCE)
-@Target(ElementType.FIELD)
-public @interface HtmlInput {
-    String type() default "text";
-    String name() default "";
-    String placeholder() default "";
+@Target(ElementType.TYPE)
+public @interface HtmlForm {
+    String method() default "get";
+    String action() default "/";
 }
