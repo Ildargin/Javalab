@@ -8,6 +8,7 @@
 9. [Adding self-made entity manager](./9-entity-manager)
 10. [Changing №6 from ejs pages to freemarker (Semester work)](https://github.com/Ildargin/javalab-semester-work)
 11. [Annotation processing example](./11-annotation-processing)
+#####
 12. [Spring mvc mail confirmation and dev modes](./12-spring-mvc-mail)
-
 13. [Spring mvc Jpa](./13-spring-mvc-jpa)
+14. [Spring JWT ](./14-spring-jwt)
